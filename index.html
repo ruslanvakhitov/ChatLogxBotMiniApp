@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Информация о пользователе</title>
+    <title>Описание функционала бота</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -22,6 +22,13 @@
             text-align: center;
             color: #4CAF50;
         }
+        ul {
+            list-style-type: disc;
+            padding-left: 20px;
+        }
+        li {
+            margin-bottom: 15px;
+        }
         .user-info {
             background-color: #e8f5e9;
             padding: 15px;
@@ -34,42 +41,23 @@
         .user-info p {
             margin: 5px 0;
         }
-        .user-photo {
-            border-radius: 50%;
-            width: 100px;
-            height: 100px;
-            object-fit: cover;
-            margin-bottom: 15px;
-        }
-        .data-section {
-            margin-bottom: 20px;
-        }
-        .data-section pre {
-            background-color: #f5f5f5;
-            padding: 15px;
-            border-radius: 8px;
-            overflow-x: auto;
-        }
     </style>
     <!-- Подключаем Telegram Web Apps JavaScript SDK -->
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
     <div class="container">
-        <h1>Информация о пользователе</h1>
+        <h1>Описание функционала бота</h1>
         <div class="user-info" id="user-info">
             <!-- Здесь будет отображена информация о пользователе -->
         </div>
-
-        <div class="data-section">
-            <h2>Данные пользователя (JSON):</h2>
-            <pre id="user-data-json"></pre>
-        </div>
-
-        <div class="data-section">
-            <h2>Все доступные данные (initDataUnsafe):</h2>
-            <pre id="init-data-json"></pre>
-        </div>
+        <ul>
+            <li><strong>Настройка времени отправки сообщений:</strong> Вы можете задать удобное для вас время получения сообщений.</li>
+            <li><strong>Выбор срока для дайджеста:</strong> Получайте сводку событий за выбранный вами период.</li>
+            <li><strong>Отправка саммари:</strong> Получайте краткие обзоры в личных сообщениях или в определенных тредах чатов.</li>
+            <li><strong>Распознавание картинок:</strong> Бот способен распознавать и анализировать изображения, отправленные в чат.</li>
+            <li><strong>Умный FAQ и база знаний:</strong> Интеллектуальный FAQ на основе истории чата и генеративная база знаний для вашего сообщества.</li>
+        </ul>
     </div>
 
     <script>
@@ -81,30 +69,15 @@
 
         if (user) {
             const userInfoDiv = document.getElementById('user-info');
-            let userInfoHtml = '';
-
-            // Отображаем фото пользователя, если доступно
-            if (user.photo_url) {
-                userInfoHtml += `<img src="${user.photo_url}" alt="Фото профиля" class="user-photo">`;
-            }
-
-            userInfoHtml += `<h2>Здравствуйте, ${user.first_name} ${user.last_name || ''}!</h2>`;
-            userInfoHtml += `<p><strong>Username:</strong> @${user.username || 'нет'}</p>`;
-            userInfoHtml += `<p><strong>ID:</strong> ${user.id}</p>`;
-            userInfoHtml += `<p><strong>Язык:</strong> ${user.language_code || 'не указан'}</p>`;
-            userInfoHtml += `<p><strong>Premium пользователь:</strong> ${user.is_premium ? 'Да' : 'Нет'}</p>`;
-
-            document.getElementById('user-info').innerHTML = userInfoHtml;
-
-            // Отображаем данные пользователя в формате JSON
-            document.getElementById('user-data-json').textContent = JSON.stringify(user, null, 2);
-
-            // Отображаем все доступные данные (initDataUnsafe)
-            document.getElementById('init-data-json').textContent = JSON.stringify(tg.initDataUnsafe, null, 2);
+            userInfoDiv.innerHTML = `
+                <h2>Здравствуйте, ${user.first_name} ${user.last_name || ''}!</h2>
+                <p><strong>Username:</strong> @${user.username || 'нет'}</p>
+                <p><strong>ID:</strong> ${user.id}</p>
+                <p><strong>Язык:</strong> ${user.language_code || 'не указан'}</p>
+            `;
         } else {
             // Если данные пользователя недоступны
             console.error('Информация о пользователе недоступна.');
-            document.getElementById('user-info').innerHTML = '<p>Информация о пользователе недоступна.</p>';
         }
     </script>
 </body>
