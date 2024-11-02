@@ -3,25 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Telegram Group Admin Checker</title>
+    <title>Admin Check Mini App</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
     <h1>Welcome to the Admin Checker Mini App!</h1>
-    <button onclick="checkAdminStatus()">Check Admin Status</button>
+    <button id="checkAdminStatus">Check Admin Status</button>
 
     <script>
         const tg = window.Telegram.WebApp;
 
-        // Function to check admin status
-        function checkAdminStatus() {
-            // Close the mini-app and send data back to the bot
-            tg.MainButton.onClick(() => {
-                tg.sendData('Check Admin Status');
-            });
-        }
+        document.getElementById('checkAdminStatus').addEventListener('click', function() {
+            tg.sendData('Check Admin Status');
+        });
 
-        // Initialize the Mini App
+        // Close the mini-app on completion
+        tg.MainButton.onClick(() => {
+            tg.close();
+        });
+
+        // Make sure everything is ready before enabling UI
         tg.ready();
     </script>
 </body>
